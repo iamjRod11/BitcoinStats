@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"   />
+        <variable
+                name="viewModel"
+                type="com.cryptoworld.project.jvr.bitcoinstats.viewmodels.BtcStatsViewModel" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:theme="@style/ToolBarStyle"
+                app:titleTextAppearance="@style/ToolBarStyle"
+                android:elevation="4dp"
+        />
+
+        <TextView android:id="@+id/desc_text"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:gravity="center"
+                  android:layout_margin="10dp"
+                  android:textSize="12sp"
+                  app:layout_constraintTop_toBottomOf="@id/my_toolbar"
+                  android:text="@{viewModel.chartDescription}"/>
+        <com.github.mikephil.charting.charts.LineChart
+                app:layout_constraintTop_toBottomOf="@id/desc_text"
+                android:id="@+id/linechart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chart_height"/>
+
+        <Spinner app:layout_constraintTop_toBottomOf="@id/linechart"
+                 android:id="@+id/interval_spinner"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="5dp"
+                 android:backgroundTint="@color/colorPrimaryDark"
+                 android:layout_marginLeft="30dp"
+                 android:paddingLeft="10dp"
+                 android:paddingRight="10dp"
+                 android:entries="@array/chart_spinner_items"
+                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        />
+        <ProgressBar
+                app:layout_constraintTop_toBottomOf="@id/linechart"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="parent"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{safeUnbox(viewModel.isLoaderVisible()) ? View.VISIBLE : View.GONE}"
+                />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
